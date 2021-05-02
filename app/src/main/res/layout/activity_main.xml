@@ -77,16 +77,30 @@
         app:layout_constraintRight_toRightOf="parent"
         android:background="@android:color/darker_gray" />
 
-    <TextView
+<!--    <TextView-->
+<!--        android:id="@+id/game_label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="cursive"-->
+<!--        android:text="@string/tic_tac_toe"-->
+<!--        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"-->
+<!--        android:textColor="#FF5722"-->
+<!--        android:textSize="30dp"-->
+<!--        android:backgroundTint="#AACDCA"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/imageView"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <ImageView
         android:id="@+id/game_label"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/tic_tac_toe"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintBottom_toTopOf="@+id/top_horizontal_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.554"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/mylogo"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -178,5 +192,70 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/turnImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_tick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:text="Turn"
+        android:textColor="#7E4C3D"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/turnImage"
+        app:layout_constraintStart_toEndOf="@+id/turnImage"
+        app:layout_constraintTop_toTopOf="@+id/turnImage" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5722"
+        android:text="replay"
+        android:visibility="gone"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintStart_toStartOf="@+id/right_vertical_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_tick"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/top_horizontal_guideline"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/game_label" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="Won"
+        android:textColor="#7E4C3D"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Tick Tack Toe</string>
     <string name="tic_tac_toe">Tic Tac Toe</string>
+    <string name="do_you_want_to_exit">Do you want to exit !!</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="game_over">Game over</string>
+    <string name="ok">Ok</string>
+    <string name="have_win_the_game"> have win the game !!</string>
+    <string name="go_back">Go Back</string>
+    <string name="re_Strart">Play Again</string>
 </resources>

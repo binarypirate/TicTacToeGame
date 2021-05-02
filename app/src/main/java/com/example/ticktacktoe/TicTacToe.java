@@ -34,7 +34,7 @@ public class TicTacToe {
         } else if (ticTacToe[0][0] == ticTacToe[1][0] && ticTacToe[1][0] == ticTacToe[2][0] && ticTacToe[2][0] != 2) {
             mListener.onGameWin(mUser, WinningDiagonal.START_VERTICAL);
         } else if (ticTacToe[0][1] == ticTacToe[1][1] && ticTacToe[1][1] == ticTacToe[2][1] && ticTacToe[2][1] != 2) {
-            mListener.onGameWin(mUser, WinningDiagonal.MID_HORIZONTAL);
+            mListener.onGameWin(mUser, WinningDiagonal.MID_VERTICAL);
         } else if (ticTacToe[0][2] == ticTacToe[1][2] && ticTacToe[1][2] == ticTacToe[2][2] && ticTacToe[2][2] != 2) {
             mListener.onGameWin(mUser, WinningDiagonal.END_VERTICAL);
         } else if (ticTacToe[0][0] == ticTacToe[1][1] && ticTacToe[1][1] == ticTacToe[2][2] && ticTacToe[2][2] != 2) {

@@ -6,4 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".ScoreActivity">
 
+    <ImageView
+        android:id="@+id/tickImage"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_tick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tickScore"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tickImage"
+        app:layout_constraintStart_toEndOf="@+id/tickImage"
+        app:layout_constraintTop_toTopOf="@+id/tickImage" />
+
+    <ImageView
+        android:id="@+id/crossImage"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_cross"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/crossScore"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/crossImage"
+        app:layout_constraintEnd_toStartOf="@+id/crossImage"
+        app:layout_constraintTop_toTopOf="@+id/crossImage" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tickImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
