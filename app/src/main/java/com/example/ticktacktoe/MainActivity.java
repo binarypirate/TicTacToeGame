@@ -1,9 +1,6 @@
 package com.example.ticktacktoe;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -62,44 +59,54 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
         switch (diagonal) {
             case TOP_HORIZONTAL:
                 for (ImageView v : mWinningCircles[0]) v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case MID_HORIZONTAL:
                 for (ImageView v : mWinningCircles[1]) v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case BOTTOM_HORIZONTAL:
                 for (ImageView v : mWinningCircles[2]) v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case START_VERTICAL:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][0], mWinningCircles[1][0], mWinningCircles[2][0]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
-//                Todo: Check here
             case MID_VERTICAL:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][1], mWinningCircles[1][1], mWinningCircles[2][1]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case END_VERTICAL:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][2], mWinningCircles[1][2], mWinningCircles[2][2]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case TOP_START_TO_BOTTOM_END_AXIS:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][0], mWinningCircles[1][1], mWinningCircles[2][2]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case TOP_END_TO_BOTTOM_START_AXIS:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][2], mWinningCircles[1][1], mWinningCircles[2][0]})
                     v.setImageResource(R.drawable.ic_win);
-
-                myDialog(winner);
                 break;
         }
+        new AlertDialog.Builder(MainActivity.this)
+                .setCancelable(false)
+                .setTitle("Game Over")
+                .setMessage("Player " + winner + " Won")
+                .setPositiveButton(R.string.re_Strart, (d, w) -> {
+                    mTicTacToe.reset();
+                    mBinding.topLeft.setImageDrawable(null);
+                    mBinding.topMid.setImageDrawable(null);
+                    mBinding.topRight.setImageDrawable(null);
+                    mBinding.midLeft.setImageDrawable(null);
+                    mBinding.midRight.setImageDrawable(null);
+                    mBinding.midMid.setImageDrawable(null);
+                    mBinding.bottomLeft.setImageDrawable(null);
+                    mBinding.bottomMid.setImageDrawable(null);
+                    mBinding.bottomRight.setImageDrawable(null);
+                    mUser = newUser();
+                    d.dismiss();
+                })
+                .setNegativeButton(R.string.go_back, (d,w) -> finish())
+                .show();
     }
 
     enum WinningDiagonal {
@@ -111,33 +118,5 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
         END_VERTICAL,
         TOP_START_TO_BOTTOM_END_AXIS,
         TOP_END_TO_BOTTOM_START_AXIS
-    }
-
-    public void myDialog(int position) {
-        new AlertDialog.Builder(MainActivity.this)
-                .setMessage("Player " + position + " Won the Game")
-                .setPositiveButton(R.string.re_Strart, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mBinding.topLeft.setImageResource(0);
-                        mBinding.topMid.setImageResource(0);
-                        mBinding.topRight.setImageResource(0);
-                        mBinding.midLeft.setImageResource(0);
-                        mBinding.midRight.setImageResource(0);
-                        mBinding.midMid.setImageResource(0);
-                        mBinding.bottomLeft.setImageResource(0);
-                        mBinding.bottomMid.setImageResource(0);
-                        mBinding.bottomRight.setImageResource(0);
-                        dialog.dismiss();
-
-                    }
-                }).setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(MainActivity.this, DashBoardActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        }).setCancelable(false).show();
     }
 }

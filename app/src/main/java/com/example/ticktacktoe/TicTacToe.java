@@ -2,6 +2,8 @@ package com.example.ticktacktoe;
 
 import com.example.ticktacktoe.MainActivity.WinningDiagonal;
 
+import java.util.Arrays;
+
 public class TicTacToe {
 
     OnGameWinListener mListener;
@@ -22,6 +24,12 @@ public class TicTacToe {
         int col = colPos == ColumnPosition.LEFT ? 0 : colPos == ColumnPosition.MID ? 1 : 2;
         ticTacToe[row][col] = mUser = user;
         check();
+    }
+
+    public void reset() {
+        for (int[] ints : ticTacToe) {
+            Arrays.fill(ints, 2);
+        }
     }
 
     private void check() {
