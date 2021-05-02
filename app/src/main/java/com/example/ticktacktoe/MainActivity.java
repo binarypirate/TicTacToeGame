@@ -1,8 +1,8 @@
 package com.example.ticktacktoe;
 
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,12 +14,15 @@ import com.example.ticktacktoe.TicTacToe.ColumnPosition;
 import com.example.ticktacktoe.TicTacToe.RowPosition;
 import com.example.ticktacktoe.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements OnGameWinListener {
+public class MainActivity extends AppCompatActivity implements OnGameEventListener {
 
+    private static final String TAG = "MainActivity";
     ActivityMainBinding mBinding;
     TicTacToe mTicTacToe;
     int mUser = newUser();
     ImageView[][] mWinningCircles;
+    String mFootSteps = "";
+    HistoryManager mHistoryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +30,19 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
 
+        mHistoryManager = HistoryManager.buildWith(openOrCreateDatabase(HistoryManager.HISTORY_DATABASE, MODE_PRIVATE, null));
+
         mTicTacToe = new TicTacToe(this);
+        mBinding.winnerImage.setVisibility(View.INVISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.INVISIBLE);
 
         mWinningCircles = new ImageView[][]{
                 {mBinding.topLeft, mBinding.topMid, mBinding.topRight},
                 {mBinding.midLeft, mBinding.midMid, mBinding.midRight},
                 {mBinding.bottomLeft, mBinding.bottomMid, mBinding.bottomRight}
         };
+
+        mBinding.restartBtn.setOnClickListener(v -> playAgain());
 
         mBinding.topLeft.setOnClickListener(v -> changeValue(((ImageView) v), RowPosition.TOP, ColumnPosition.LEFT));
         mBinding.topMid.setOnClickListener(v -> changeValue(((ImageView) v), RowPosition.TOP, ColumnPosition.MID));
@@ -47,9 +56,12 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
     }
 
     private void changeValue(ImageView v, RowPosition rowPosition, ColumnPosition columnPosition) {
+        mFootSteps += rowPosition.name() + "_" + columnPosition.name() + ",";
+        Log.e("FootStep", "changeValue: " + mFootSteps);
         v.setImageResource(mUser == 0 ? R.drawable.ic_cross : R.drawable.ic_tick);
         mTicTacToe.setValue(mUser, rowPosition, columnPosition);
         mUser = mUser == 0 ? 1 : 0;
+        mBinding.turnImage.setImageResource(mUser == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
     }
 
     private int newUser() {
@@ -58,47 +70,80 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
 
     @Override
     public void onGameWin(int winner, WinningDiagonal diagonal) {
-        Toast.makeText(this, winner + " Won!", Toast.LENGTH_SHORT).show();
+        mHistoryManager.saveGameOverHistory(new GameOver(String.valueOf(winner), mFootSteps));
+        mBinding.winnerImage.setVisibility(View.VISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.VISIBLE);
+        mBinding.winnerImage.setImageResource(winner == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
+        mBinding.gameOverStatus.setText(R.string.won);
+        mBinding.turnImage.setVisibility(View.GONE);
+        mBinding.turnTextLabel.setVisibility(View.GONE);
         switch (diagonal) {
             case TOP_HORIZONTAL:
                 for (ImageView v : mWinningCircles[0]) v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case MID_HORIZONTAL:
                 for (ImageView v : mWinningCircles[1]) v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case BOTTOM_HORIZONTAL:
                 for (ImageView v : mWinningCircles[2]) v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case START_VERTICAL:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][0], mWinningCircles[1][0], mWinningCircles[2][0]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
-//                Todo: Check here
             case MID_VERTICAL:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][1], mWinningCircles[1][1], mWinningCircles[2][1]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case END_VERTICAL:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][2], mWinningCircles[1][2], mWinningCircles[2][2]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case TOP_START_TO_BOTTOM_END_AXIS:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][0], mWinningCircles[1][1], mWinningCircles[2][2]})
                     v.setImageResource(R.drawable.ic_win);
-                myDialog(winner);
                 break;
             case TOP_END_TO_BOTTOM_START_AXIS:
                 for (ImageView v : new ImageView[]{mWinningCircles[0][2], mWinningCircles[1][1], mWinningCircles[2][0]})
                     v.setImageResource(R.drawable.ic_win);
-
-                myDialog(winner);
                 break;
+        }
+        for (ImageView[] imagesRow: mWinningCircles) {
+            for (ImageView image: imagesRow) {
+                image.setEnabled(false);
+            }
+        }
+    }
+
+    private void playAgain() {
+        mTicTacToe.reset();
+        mFootSteps = "";
+        for (ImageView[] imagesRow: mWinningCircles) {
+            for (ImageView image: imagesRow) {
+                image.setImageDrawable(null);
+                image.setEnabled(true);
+            }
+        }
+        mBinding.winnerImage.setVisibility(View.INVISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.INVISIBLE);
+        mUser = newUser();
+        mBinding.turnTextLabel.setVisibility(View.VISIBLE);
+        mBinding.turnImage.setVisibility(View.VISIBLE);
+        mBinding.turnImage.setImageResource(mUser == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
+    }
+
+    @Override
+    public void onGameTie() {
+        mBinding.turnImage.setVisibility(View.GONE);
+        mBinding.turnTextLabel.setVisibility(View.GONE);
+        mBinding.winnerImage.setVisibility(View.INVISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.VISIBLE);
+        mBinding.gameOverStatus.setText(R.string.tie);
+        for (ImageView[] imagesRow: mWinningCircles) {
+            for (ImageView image: imagesRow) {
+                image.setImageResource(R.drawable.ic_win);
+                image.setEnabled(false);
+            }
         }
     }
 
@@ -111,33 +156,5 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
         END_VERTICAL,
         TOP_START_TO_BOTTOM_END_AXIS,
         TOP_END_TO_BOTTOM_START_AXIS
-    }
-
-    public void myDialog(int position) {
-        new AlertDialog.Builder(MainActivity.this)
-                .setMessage("Player " + position + " Won the Game")
-                .setPositiveButton(R.string.re_Strart, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mBinding.topLeft.setImageResource(0);
-                        mBinding.topMid.setImageResource(0);
-                        mBinding.topRight.setImageResource(0);
-                        mBinding.midLeft.setImageResource(0);
-                        mBinding.midRight.setImageResource(0);
-                        mBinding.midMid.setImageResource(0);
-                        mBinding.bottomLeft.setImageResource(0);
-                        mBinding.bottomMid.setImageResource(0);
-                        mBinding.bottomRight.setImageResource(0);
-                        dialog.dismiss();
-
-                    }
-                }).setNegativeButton(R.string.go_back, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(MainActivity.this, DashBoardActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        }).setCancelable(false).show();
     }
 }
