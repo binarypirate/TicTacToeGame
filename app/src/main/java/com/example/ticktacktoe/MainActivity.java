@@ -1,5 +1,6 @@
 package com.example.ticktacktoe;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +22,15 @@ public class MainActivity extends AppCompatActivity implements OnGameEventListen
     int mUser = newUser();
     ImageView[][] mWinningCircles;
     String mFootSteps = "";
+    HistoryManager mHistoryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
+
+        mHistoryManager = HistoryManager.buildWith(openOrCreateDatabase(HistoryManager.HISTORY_DATABASE, MODE_PRIVATE, null));
 
         mTicTacToe = new TicTacToe(this);
         mBinding.winnerImage.setVisibility(View.INVISIBLE);
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnGameEventListen
 
     @Override
     public void onGameWin(int winner, WinningDiagonal diagonal) {
+        mHistoryManager.saveGameOverHistory(new GameOver(String.valueOf(winner), mFootSteps));
         mBinding.winnerImage.setVisibility(View.VISIBLE);
         mBinding.gameOverStatus.setVisibility(View.VISIBLE);
         mBinding.winnerImage.setImageResource(winner == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
