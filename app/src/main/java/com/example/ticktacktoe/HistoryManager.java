@@ -1,6 +1,10 @@
 package com.example.ticktacktoe;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryManager {
     public static final String HISTORY_DATABASE = "hdb";
@@ -30,6 +34,15 @@ public class HistoryManager {
                 "(" + game_over_status + "," + foot_steps + ")" +
                 "VALUES ('"+gameOver.status+"', '"+gameOver.footSteps+"')";
         historyDatabase.execSQL(query);
+    }
+
+    public List<GameOver> getGameOverHistory() {
+        Cursor cursor = historyDatabase.rawQuery("SELECT * FROM " + HISTORY_RECORD_TABLE, null);
+        List<GameOver> gameOversHistory = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            gameOversHistory.add(new GameOver(cursor.getString(1), cursor.getString(2)));
+        }
+        return gameOversHistory;
     }
 
     public static HistoryManager buildWith(SQLiteDatabase historyDatabase) {
