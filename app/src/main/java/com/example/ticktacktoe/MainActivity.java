@@ -1,6 +1,7 @@
 package com.example.ticktacktoe;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,10 +15,12 @@ import com.example.ticktacktoe.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements OnGameEventListener {
 
+    private static final String TAG = "MainActivity";
     ActivityMainBinding mBinding;
     TicTacToe mTicTacToe;
     int mUser = newUser();
     ImageView[][] mWinningCircles;
+    String mFootSteps = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements OnGameEventListen
     }
 
     private void changeValue(ImageView v, RowPosition rowPosition, ColumnPosition columnPosition) {
+        mFootSteps += rowPosition.name() + "_" + columnPosition.name() + ",";
+        Log.e("FootStep", "changeValue: " + mFootSteps);
         v.setImageResource(mUser == 0 ? R.drawable.ic_cross : R.drawable.ic_tick);
         mTicTacToe.setValue(mUser, rowPosition, columnPosition);
         mUser = mUser == 0 ? 1 : 0;
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnGameEventListen
 
     private void playAgain() {
         mTicTacToe.reset();
+        mFootSteps = "";
         for (ImageView[] imagesRow: mWinningCircles) {
             for (ImageView image: imagesRow) {
                 image.setImageDrawable(null);
