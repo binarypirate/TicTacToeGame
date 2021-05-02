@@ -9,4 +9,6 @@
     <string name="have_win_the_game"> have win the game !!</string>
     <string name="go_back">Go Back</string>
     <string name="re_Strart">Play Again</string>
+    <string name="won">Won!</string>
+    <string name="tie">Tie</string>
 </resources>

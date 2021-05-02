@@ -44,154 +44,155 @@
     <View
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline"
         app:layout_constraintLeft_toLeftOf="@id/left_vertical_guideline"
         app:layout_constraintRight_toRightOf="@id/left_vertical_guideline"
-        android:background="@android:color/darker_gray" />
+        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline" />
 
     <View
         android:layout_width="2dp"
         android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline"
         app:layout_constraintLeft_toLeftOf="@id/right_vertical_guideline"
         app:layout_constraintRight_toRightOf="@id/right_vertical_guideline"
-        android:background="@android:color/darker_gray" />
+        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="@id/mid_horizontal_guideline"
-       app:layout_constraintTop_toTopOf="@id/mid_horizontal_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@android:color/darker_gray" />
+        app:layout_constraintTop_toTopOf="@id/mid_horizontal_guideline" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="@id/bottom_horizontal_guideline"
-        app:layout_constraintTop_toTopOf="@id/bottom_horizontal_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@android:color/darker_gray" />
+        app:layout_constraintTop_toTopOf="@id/bottom_horizontal_guideline" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/game_label"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="cursive"-->
-<!--        android:text="@string/tic_tac_toe"-->
-<!--        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"-->
-<!--        android:textColor="#FF5722"-->
-<!--        android:textSize="30dp"-->
-<!--        android:backgroundTint="#AACDCA"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/imageView"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/game_label"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fontFamily="cursive"-->
+    <!--        android:text="@string/tic_tac_toe"-->
+    <!--        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"-->
+    <!--        android:textColor="#FF5722"-->
+    <!--        android:textSize="30dp"-->
+    <!--        android:backgroundTint="#AACDCA"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/imageView"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ImageView
         android:id="@+id/game_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/mylogo"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/top_horizontal_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
     <ImageView
         android:id="@+id/top_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/left_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline"
-        app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/top_mid"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/left_vertical_guideline"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@id/left_vertical_guideline"
         app:layout_constraintRight_toLeftOf="@id/right_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline"
-        app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/top_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/right_vertical_guideline"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@id/right_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline"
-        app:layout_constraintBottom_toTopOf="@id/mid_horizontal_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/top_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/mid_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_horizontal_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/left_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guideline"
-        app:layout_constraintBottom_toTopOf="@id/bottom_horizontal_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/mid_mid"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/left_vertical_guideline"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@id/left_vertical_guideline"
         app:layout_constraintRight_toLeftOf="@id/right_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guideline"
-        app:layout_constraintBottom_toTopOf="@id/bottom_horizontal_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/mid_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/right_vertical_guideline"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@id/right_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guideline"
-        app:layout_constraintBottom_toTopOf="@id/bottom_horizontal_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/mid_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/bottom_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/left_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/bottom_mid"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/left_vertical_guideline"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/left_vertical_guideline"
         app:layout_constraintRight_toLeftOf="@id/right_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/bottom_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/right_vertical_guideline"
         android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/right_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/bottom_horizontal_guideline" />
 
     <ImageView
         android:id="@+id/turnImage"
@@ -203,6 +204,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/turn_text_label"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
@@ -217,12 +219,11 @@
         app:layout_constraintTop_toTopOf="@+id/turnImage" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/restart_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF5722"
-        android:text="replay"
-        android:visibility="gone"
+        android:text="Restart"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
@@ -230,32 +231,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/winner_image"
         android:layout_width="35dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_tick"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/top_horizontal_guideline"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/game_label" />
+        app:layout_constraintBottom_toBottomOf="@+id/game_over_status"
+        app:layout_constraintEnd_toStartOf="@+id/game_over_status"
+        app:layout_constraintTop_toTopOf="@+id/game_over_status" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/game_over_status"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="40dp"
         android:fontFamily="casual"
         android:gravity="center"
-        android:visibility="gone"
         android:text="Won"
         android:textColor="#7E4C3D"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/top_horizontal_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical_guideline"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
+        app:layout_constraintStart_toStartOf="@+id/left_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/game_label" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

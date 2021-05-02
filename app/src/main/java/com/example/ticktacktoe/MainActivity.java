@@ -1,6 +1,7 @@
 package com.example.ticktacktoe;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -11,7 +12,7 @@ import com.example.ticktacktoe.TicTacToe.ColumnPosition;
 import com.example.ticktacktoe.TicTacToe.RowPosition;
 import com.example.ticktacktoe.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements OnGameWinListener {
+public class MainActivity extends AppCompatActivity implements OnGameEventListener {
 
     ActivityMainBinding mBinding;
     TicTacToe mTicTacToe;
@@ -25,12 +26,16 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
         setContentView(mBinding.getRoot());
 
         mTicTacToe = new TicTacToe(this);
+        mBinding.winnerImage.setVisibility(View.INVISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.INVISIBLE);
 
         mWinningCircles = new ImageView[][]{
                 {mBinding.topLeft, mBinding.topMid, mBinding.topRight},
                 {mBinding.midLeft, mBinding.midMid, mBinding.midRight},
                 {mBinding.bottomLeft, mBinding.bottomMid, mBinding.bottomRight}
         };
+
+        mBinding.restartBtn.setOnClickListener(v -> playAgain());
 
         mBinding.topLeft.setOnClickListener(v -> changeValue(((ImageView) v), RowPosition.TOP, ColumnPosition.LEFT));
         mBinding.topMid.setOnClickListener(v -> changeValue(((ImageView) v), RowPosition.TOP, ColumnPosition.MID));
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
         v.setImageResource(mUser == 0 ? R.drawable.ic_cross : R.drawable.ic_tick);
         mTicTacToe.setValue(mUser, rowPosition, columnPosition);
         mUser = mUser == 0 ? 1 : 0;
+        mBinding.turnImage.setImageResource(mUser == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
     }
 
     private int newUser() {
@@ -55,7 +61,12 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
 
     @Override
     public void onGameWin(int winner, WinningDiagonal diagonal) {
-        Toast.makeText(this, winner + " Won!", Toast.LENGTH_SHORT).show();
+        mBinding.winnerImage.setVisibility(View.VISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.VISIBLE);
+        mBinding.winnerImage.setImageResource(winner == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
+        mBinding.gameOverStatus.setText(R.string.won);
+        mBinding.turnImage.setVisibility(View.GONE);
+        mBinding.turnTextLabel.setVisibility(View.GONE);
         switch (diagonal) {
             case TOP_HORIZONTAL:
                 for (ImageView v : mWinningCircles[0]) v.setImageResource(R.drawable.ic_win);
@@ -87,26 +98,42 @@ public class MainActivity extends AppCompatActivity implements OnGameWinListener
                     v.setImageResource(R.drawable.ic_win);
                 break;
         }
-        new AlertDialog.Builder(MainActivity.this)
-                .setCancelable(false)
-                .setTitle("Game Over")
-                .setMessage("Player " + winner + " Won")
-                .setPositiveButton(R.string.re_Strart, (d, w) -> {
-                    mTicTacToe.reset();
-                    mBinding.topLeft.setImageDrawable(null);
-                    mBinding.topMid.setImageDrawable(null);
-                    mBinding.topRight.setImageDrawable(null);
-                    mBinding.midLeft.setImageDrawable(null);
-                    mBinding.midRight.setImageDrawable(null);
-                    mBinding.midMid.setImageDrawable(null);
-                    mBinding.bottomLeft.setImageDrawable(null);
-                    mBinding.bottomMid.setImageDrawable(null);
-                    mBinding.bottomRight.setImageDrawable(null);
-                    mUser = newUser();
-                    d.dismiss();
-                })
-                .setNegativeButton(R.string.go_back, (d,w) -> finish())
-                .show();
+        for (ImageView[] imagesRow: mWinningCircles) {
+            for (ImageView image: imagesRow) {
+                image.setEnabled(false);
+            }
+        }
+    }
+
+    private void playAgain() {
+        mTicTacToe.reset();
+        for (ImageView[] imagesRow: mWinningCircles) {
+            for (ImageView image: imagesRow) {
+                image.setImageDrawable(null);
+                image.setEnabled(true);
+            }
+        }
+        mBinding.winnerImage.setVisibility(View.INVISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.INVISIBLE);
+        mUser = newUser();
+        mBinding.turnTextLabel.setVisibility(View.VISIBLE);
+        mBinding.turnImage.setVisibility(View.VISIBLE);
+        mBinding.turnImage.setImageResource(mUser == 1 ? R.drawable.ic_tick : R.drawable.ic_cross);
+    }
+
+    @Override
+    public void onGameTie() {
+        mBinding.turnImage.setVisibility(View.GONE);
+        mBinding.turnTextLabel.setVisibility(View.GONE);
+        mBinding.winnerImage.setVisibility(View.INVISIBLE);
+        mBinding.gameOverStatus.setVisibility(View.VISIBLE);
+        mBinding.gameOverStatus.setText(R.string.tie);
+        for (ImageView[] imagesRow: mWinningCircles) {
+            for (ImageView image: imagesRow) {
+                image.setImageResource(R.drawable.ic_win);
+                image.setEnabled(false);
+            }
+        }
     }
 
     enum WinningDiagonal {

@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class TicTacToe {
 
-    OnGameWinListener mListener;
+    OnGameEventListener mListener;
     int mUser;
 
     int[][] ticTacToe = {
@@ -15,7 +15,7 @@ public class TicTacToe {
             {2,2,2}
     };
 
-    public TicTacToe(OnGameWinListener listener) {
+    public TicTacToe(OnGameEventListener listener) {
         mListener = listener;
     }
 
@@ -29,6 +29,21 @@ public class TicTacToe {
     public void reset() {
         for (int[] ints : ticTacToe) {
             Arrays.fill(ints, 2);
+        }
+    }
+
+    public void checkTie() {
+        boolean is2Exist = false;
+        for (int[] row: ticTacToe) {
+            for (int col: row) {
+                if (col == 2) {
+                    is2Exist = true;
+                    break;
+                }
+            }
+        }
+        if (!is2Exist) {
+            mListener.onGameTie();
         }
     }
 
@@ -49,6 +64,8 @@ public class TicTacToe {
             mListener.onGameWin(mUser, WinningDiagonal.TOP_START_TO_BOTTOM_END_AXIS);
         } else if (ticTacToe[0][2] == ticTacToe[1][1] && ticTacToe[1][1] == ticTacToe[2][0] && ticTacToe[2][0] != 2) {
             mListener.onGameWin(mUser, WinningDiagonal.TOP_END_TO_BOTTOM_START_AXIS);
+        } else {
+            checkTie();
         }
     }
 
